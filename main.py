@@ -25,8 +25,10 @@ RETRIEVE_QUERY = """
 """
 
 
-def retrieve_similar_abstracts(query, limit, conn, model=None):
+def retrieve_similar_abstracts(query, limit, conn, model=None, query_extension="therapeutic targets"):
     # Generate embedding for search query
+    query = f"{query} AND {query_extension}"
+
     query_embedding = list(get_embeddings(query, model))
     data = (query_embedding, query_embedding, limit)
 

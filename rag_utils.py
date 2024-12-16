@@ -57,8 +57,11 @@ def get_gemini_completion(prompt, system_prompt=None, json_format=False):
         chat = client.start_chat()
 
     generation_config = genai.GenerationConfig(
-        response_mime_type="application/json",
-    ) if json_format else None
+        temperature=0.1
+    ) 
+    
+    if json_format:
+        generation_config.response_mime_type = "application/json"
 
     # response = client.generate_content(prompt, generation_config=generation_config)
     response = chat.send_message(prompt, generation_config=generation_config)
