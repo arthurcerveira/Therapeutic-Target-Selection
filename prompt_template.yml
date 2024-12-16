@@ -1,16 +1,38 @@
 System_Prompt: |
-  You are an AI assistant that answers questions about biomedical topics based on abstracts from scientific articles.
+  You are an AI assistant tasked with extracting therapeutic targets for a specific diseases from provided research abstracts.
 
 Prompt: |
-  Using exclusively the information contained in the Abstracts section, answer the question provided in the User Question section. If there is not enough information to answer the question, respond with something indicating that there is insufficient information. Do not mention the Abstract in your answer.
+  Extract the therapeutic targets for a specific Disease using exclusively the information contained in the Research Abstracts section. The output must be structured as a JSON object with the key `"targets"` and the value being a list of JSON objects. Each object must have the following fields:
 
-  When answering, follow these instructions:
-  - Be objective and concise.
-  - Be formal and professional.
-  - If the question is unrelated to the article, do not answer.
+  - `"target"`: The name of the therapeutic target identified.
+  - `"relevant section"`: A concise snippet from the abstracts that provides context for the target.
 
-  # User Question
-  {query}
+  If the abstracts do not contain any therapeutic targets for the specified disease, the output should be an empty list.
 
-  # Abstracts
-  {chunks}
+  # Instructions:
+  1. Identify therapeutic targets mentioned in the abstracts that are associated with the disease "{disease}".
+  2. Provide the relevant snippet from the abstract to justify each identified target.
+  3. Ensure that the snippets are directly tied to the disease and therapeutic target relationship.
+  4. Format the output as a JSON object, as described in the Output section.
+
+  # Output:
+  ```json
+  {
+    "targets": [
+      {
+        "target": "Example Target 1",
+        "relevant section": "Snippet from the abstract where Example Target 1 is discussed in relation to {disease}."
+      },
+      {
+        "target": "Example Target 2",
+        "relevant section": "Snippet from the abstract where Example Target 2 is discussed in relation to {disease}."
+      }
+    ]
+  }
+
+  # Disease:
+  {disease}
+
+  # Research Abstracts:
+  {abstracts}
+  ```

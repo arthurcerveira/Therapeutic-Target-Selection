@@ -42,11 +42,11 @@ def retrieve_similar_abstracts(query, limit, conn, model=None):
     return results
 
 
-def rag_pipeline(query, limit=5):
+def rag_pipeline(disease, limit=5):
     embeddings_model = get_embeddings_model()
 
     with psycopg.connect(DATABASE_URL) as conn:
-        results = retrieve_similar_abstracts(query, limit, conn, embeddings_model)
+        results = retrieve_similar_abstracts(disease, limit, conn, embeddings_model)
 
     abstracts = list()
 
@@ -56,14 +56,14 @@ def rag_pipeline(query, limit=5):
         abstracts.append(text)
 
     chunks = "\n".join([f"{chunk}\n" for chunk in abstracts])
-    prompt = PROMPT_TEMPLATE.format(query=query, chunks=chunks)
+    prompt = PROMPT_TEMPLATE.replace("{disease}", disease).replace("{abstracts}", chunks)
 
-    response = get_gemini_completion(prompt, SYSTEM_PROMPT)
+    response = get_gemini_completion(prompt, SYSTEM_PROMPT, json_format=True)
 
     return response.text, chunks
 
 if __name__ == "__main__":
-    query = "What are the therapeutic targets for Alzheimer's disease?"
+    query = "Alzheimer's disease"
 
     demo = gr.Interface(
         fn=rag_pipeline,

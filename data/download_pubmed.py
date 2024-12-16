@@ -31,5 +31,5 @@ for entry in pubmed['train']:
         # Create a new directory for the next batch of files
         os.makedirs(f'./pubmed/{dir_idx}', exist_ok=True)
 
-    if count == 5_000_000:
+    if count == 30_000_000:
         break
