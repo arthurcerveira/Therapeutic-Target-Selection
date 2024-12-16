@@ -60,20 +60,19 @@ def rag_pipeline(query, limit=5):
 
     response = get_gemini_completion(prompt, SYSTEM_PROMPT)
 
-    return response.text
+    return response.text, chunks
 
 if __name__ == "__main__":
     query = "What are the therapeutic targets for Alzheimer's disease?"
-    # response = rag_pipeline(query)
-    # print(response)
 
     demo = gr.Interface(
         fn=rag_pipeline,
-        inputs=[gr.Textbox(lines=1, label="Query", placeholder=query), 
-                gr.Slider(1, 20, step=1, value=5, label="Limit")],
-        outputs="text",
-        title="RAG Pipeline",
-        description="Retrieve similar abstracts using a RAG pipeline."
+        inputs=[gr.Textbox(lines=1, label="Disease", placeholder=query), 
+                gr.Slider(1, 20, step=1, value=5, label="Abstracts Limit")],
+        outputs=[gr.Textbox(lines=5, label="Disease targets"),
+                 gr.Textbox(lines=20, label="Retrieved Abstracts")],
+        title="Therapeutic Targets Identification",
+        description="Identify therapeutic targets for a given disease query."
     )
 
     demo.launch()

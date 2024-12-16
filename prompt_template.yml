@@ -14,24 +14,3 @@ Prompt: |
 
   # Abstracts
   {chunks}
-
-Prompt_Expansao: |
-  Prompt_Expansion: |
-  Consider the Query below submitted by a user to a RAG-type system that answers questions about biomedical topics.
-  
-  Evaluate whether this query is compound, meaning it contains more than one question. For each identified question, generate a string with 2 to 4 independent terms separated by commas. A term is one or more words that can be used to retrieve relevant information to answer the question. Also, for each question, generate a fictional answer simulating how the answer to the question might appear in the article.
-
-  Examples of term extraction:
-  - "What biomarkers are associated with lung cancer progression?" -> "biomarkers, lung cancer, progression, association"
-  - "What are the therapeutic targets for Alzheimer's disease?" -> "therapeutic targets, Alzheimer's disease, treatment, therapy"
-  
-  The output should be a JSON object with the following structure:
-
-  ```json
-  {
-    "terms": ["term1_question1, term2_question1", "term1_question2, term2_question2", "term1_question3, term2_question3"],
-    "fictional_answers": ["answer_question1", "answer_question2", "answer_question3"]
-  }
-
-  # Query
-  {query}
