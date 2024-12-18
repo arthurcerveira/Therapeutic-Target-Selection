@@ -5,15 +5,15 @@ Prompt: |
   Extract the therapeutic targets for a specific Disease using exclusively the information contained in the Research Abstracts section. The output must be structured as a JSON object with the key `"targets"` and the value being a list of JSON objects. Each object must have the following fields:
 
   - `"target"`: The name of the therapeutic target identified.
-  - `"relevant section"`: A concise snippet from the abstracts that provides context for the target.
+  - `"relevant snippet"`: A concise snippet from the abstracts that provides context for the target.
 
   If the abstracts do not contain any therapeutic targets for the specified disease, the output should be an empty list.
 
   # Instructions:
-  1. Identify therapeutic targets mentioned in the abstracts that are associated with the disease "{disease}".
-  2. Provide the relevant snippet from the abstract to justify each identified target.
-  3. Ensure that the snippets are directly tied to the disease and therapeutic target relationship.
-  4. Format the output as a JSON object, as described in the Output section.
+  1. Identify therapeutic targets explicitly mentioned in the abstracts that are associated with the disease "{disease}".
+  2. Provide the relevant snippet from the abstract to justify each identified target. Ensure that the snippet directly ties the therapeutic target to the disease.
+  3. Include only targets that are explicitly defined in the abstracts; avoid inferring or speculating targets not clearly stated.
+  4. Format the output as a JSON object, as described above.
 
   # Output:
   ```json
@@ -21,11 +21,11 @@ Prompt: |
     "targets": [
       {
         "target": "Example Target 1",
-        "relevant section": "Snippet from the abstract where Example Target 1 is discussed in relation to {disease}."
+        "relevant snippet": "Snippet from the abstract where Example Target 1 is discussed in relation to {disease}."
       },
       {
         "target": "Example Target 2",
-        "relevant section": "Snippet from the abstract where Example Target 2 is discussed in relation to {disease}."
+        "relevant snippet": "Snippet from the abstract where Example Target 2 is discussed in relation to {disease}."
       }
     ]
   }

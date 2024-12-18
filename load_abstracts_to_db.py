@@ -55,5 +55,10 @@ def load_abstracts_to_db(folder_path, chunk_size=10_000, conn=None):
 
 
 if __name__ == "__main__":
-    with psycopg.connect(DATABASE_URL) as conn:
-        load_abstracts_to_db('data/pubmed/0', conn=conn)
+    N = 50
+    abstracts_folder = range(N)
+
+    for i in abstracts_folder:
+        with psycopg.connect(DATABASE_URL) as conn:
+            print(f"Loading abstracts from folder data/pubmed/{i}")
+            load_abstracts_to_db(f'data/pubmed/{i}', conn=conn)

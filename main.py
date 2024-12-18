@@ -1,3 +1,4 @@
+import json
 import psycopg
 from dotenv import load_dotenv
 import gradio as gr
@@ -61,8 +62,16 @@ def rag_pipeline(disease, limit=5):
     prompt = PROMPT_TEMPLATE.replace("{disease}", disease).replace("{abstracts}", chunks)
 
     response = get_gemini_completion(prompt, SYSTEM_PROMPT, json_format=True)
+    text = response.text
 
-    return response.text, chunks
+    # Convert JSON if valid
+    try:
+        text_dict = json.loads(text)
+        text = json.dumps(text_dict, indent=4)
+    except json.JSONDecodeError:
+        pass
+
+    return text, chunks
 
 if __name__ == "__main__":
     query = "Alzheimer's disease"
